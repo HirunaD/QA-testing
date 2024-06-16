@@ -1,0 +1,612 @@
+{
+	"info": {
+		"_postman_id": "ce62eba4-0248-4af3-9bac-84f1d3be8b11",
+		"name": "RMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29591444"
+	},
+	"item": [
+		{
+			"name": "User Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// pm.environment.set(\"randomEmail\", `test${Math.floor(Math.random() * 10000)}@example.com`);",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - status and message\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.have.property('status');",
+							"  pm.expect(responseData).to.have.property('message');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"// pm.test(\"Email address should be in a valid format\", function () {",
+							"//     const responseData = pm.response.json();",
+							"    ",
+							"//     pm.expect(responseData).to.be.an('object');",
+							"//     pm.expect(responseData.email).to.be.a('string').and.to.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);",
+							"// });",
+							"",
+							"",
+							"pm.test(\"Content type is application/json\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"johndoe@example.com\",\r\n  \"password\": \"password123\",\r\n  \"mobileNumber\": \"1234567890\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Signin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// // Function to generate tests based on JSON keys\r",
+							"// function generateTests(jsonObj) {\r",
+							"//     let tests = '';\r",
+							"//     for (let key in jsonObj) {\r",
+							"//         if (jsonObj.hasOwnProperty(key)) {\r",
+							"//             tests += `\r",
+							"//                 pm.test(\"Response contains ${key}\", function () {\r",
+							"//                     var jsonData = pm.response.json();\r",
+							"//                     pm.expect(jsonData).to.have.property('${key}');\r",
+							"//                 });\r",
+							"//             `;\r",
+							"//         }\r",
+							"//     }\r",
+							"//     return tests;\r",
+							"// }\r",
+							"\r",
+							"// // Retrieve the request body\r",
+							"// let requestBody = pm.request.body.raw;\r",
+							"// let jsonBody = JSON.parse(requestBody);\r",
+							"\r",
+							"// // Generate tests and set them as an environment variable\r",
+							"// let generatedTests = generateTests(jsonBody);\r",
+							"// pm.environment.set(\"generatedTests\", generatedTests);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Response has the required fields - status, message, and token\", function () {\r",
+							"//   const responseData = pm.response.json();\r",
+							"  \r",
+							"//   pm.expect(responseData).to.be.an('object');\r",
+							"//   pm.expect(responseData).to.have.property('status');\r",
+							"//   pm.expect(responseData).to.have.property('message');\r",
+							"//   pm.expect(responseData).to.have.property('token');\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Response has the required fields - status and message\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData).to.have.property('status');\r",
+							"  pm.expect(responseData).to.have.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Email address should be in a valid format\", function () {\r",
+							"//   pm.expect(requestBody.email).to.be.a('string').and.to.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Password should be a non-empty string\", function () {\r",
+							"//   pm.expect(requestBody.password).to.be.a('string').and.to.have.length.above(0);\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Token should be a non-empty string\", function () {\r",
+							"//   const responseData = pm.response.json();\r",
+							"  \r",
+							"//   pm.expect(responseData.token).to.be.a('string').and.to.have.length.above(0);\r",
+							"// });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"john.doe@example.com\",\r\n  \"password\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Item to Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields - status, message, and data\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData).to.have.property('status');\r",
+							"  pm.expect(responseData).to.have.property('message');\r",
+							"  pm.expect(responseData).to.have.property('data');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User ID should be a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  pm.expect(responseData.data.userId).to.be.a('string').and.to.have.length.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product name should be a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  pm.expect(responseData.data.name).to.be.a('string').and.to.have.length.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product description should be a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  pm.expect(responseData.data.description).to.be.a('string').and.to.have.length.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Price should be a valid number\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  pm.expect(responseData.data.price).to.match(/^\\d+$/);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"user123\",\r\n  \"name\": \"Product Name\",\r\n  \"description\": \"Product Description\",\r\n  \"price\": \"1000\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/cart/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"cart",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields - message\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData).to.have.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"User ID should be a non-empty string\", function () {\r",
+							"//   pm.expect(requestBody.userId).to.be.a('string').and.to.have.length.above(0);\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"user123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/cart/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"cart",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Password Reset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields - status and message\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData).to.have.property('status');\r",
+							"  pm.expect(responseData).to.have.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"Email address should be in a valid format\", function () {\r",
+							"//     pm.expect(requestBody.email).to.be.a('string').and.to.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Redirect URL should be a valid URL\", function () {\r",
+							"//   pm.expect(requestBody.redirectUrl).to.be.a('string').and.to.match(/^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$/);\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"john.doe@example.com\",\r\n  \"redirectUrl\": \"http://localhost:5000/reset-password\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/requestPasswordReset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"requestPasswordReset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields - status and message\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData).to.have.property('status');\r",
+							"  pm.expect(responseData).to.have.property('message');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"UserId should be a non-empty string\", function () {\r",
+							"//   pm.expect(requestBody.userId).to.be.a('string').and.to.not.be.empty;\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"Reset string should be a non-empty string\", function () {\r",
+							"//   pm.expect(requestBody.resetString).to.be.a('string').and.to.not.be.empty;\r",
+							"// });\r",
+							"\r",
+							"// pm.test(\"New password should be a valid string with minimum 8 characters\", function () {\r",
+							"//   pm.expect(requestBody.newPassword).to.be.a('string').and.to.have.lengthOf.at.least(8);\r",
+							"// });\r",
+							"\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"user123\",\r\n  \"resetString\": \"resetStringFromEmail\",\r\n  \"newPassword\": \"newPassword123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/resetPassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"resetPassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item from Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test that the status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Test that the response has the expected message\r",
+							"pm.test(\"Response contains success message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Item deleted from the cart successfully\");\r",
+							"});\r",
+							"\r",
+							"// Test that the response time is less than 300ms\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"// Test that the content type is application/json\r",
+							"pm.test(\"Content type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"// Test that the response is valid JSON\r",
+							"pm.test(\"Response is valid JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user/cart/user123/664caee8aef074c95b4d5916",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"cart",
+						"user123",
+						"664caee8aef074c95b4d5916"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items in Cart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/user/cart/hirunadesilva0422@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"cart",
+						"hirunadesilva0422@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Stripe Checkout Session",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/user/checkout/664ba438a9aa9b63f7e214ab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"checkout",
+						"664ba438a9aa9b63f7e214ab"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
